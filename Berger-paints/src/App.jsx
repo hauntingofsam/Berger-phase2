@@ -43,11 +43,11 @@ function App() {
   
 
   return (
-    <div className="bg-violet-950 h-full">
+    <div className="bg-violet-950 pb-[50vw]">
       <GeneralInfo/>
       <AmountField/>
       <DateRange/>
-      <ProductSelect/>
+      {/* <ProductSelect/> */}
       <Schemes/>
       
       

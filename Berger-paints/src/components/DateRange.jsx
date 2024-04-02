@@ -2,44 +2,125 @@ import React from "react";
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
+import { DateRange } from 'react-date-range'
 import { addDays } from 'date-fns';
-import { useState } from "react";
+import { useState,useEffect,useRef } from "react";
 import "../App.css";
-const DateRange=()=>{
-    const [state, setState] = useState([
+import format from 'date-fns/format'
+import ProductSelect from "./Productselect";
+const DateRangeChoose=()=>{
+    // const [state, setState] = useState([
+    //     {
+    //       startDate: new Date(),
+    //       endDate: addDays(new Date(),7),
+    //       key: 'selection'
+    //     }
+    //   ]);
+      const [range, setRange] = useState([
         {
           startDate: new Date(),
-          endDate: addDays(new Date(),7),
+          endDate: addDays(new Date(), 7),
           key: 'selection'
         }
-      ]);
+      ])
+    
+      // open close
+      const [open, setOpen] = useState(false)
+    
+      // get the target element to toggle 
+      const refOne = useRef(null)
+    
+      useEffect(() => {
+        // event listeners
+        document.addEventListener("keydown", hideOnEscape, true)
+        document.addEventListener("click", hideOnClickOutside, true)
+      }, [])
+    
+      // hide dropdown on ESC press
+      const hideOnEscape = (e) => {
+        // console.log(e.key)
+        if( e.key === "Escape" ) {
+          setOpen(false)
+        }
+      }
+    
+      // Hide dropdown on outside click
+      const hideOnClickOutside = (e) => {
+        
+        if( refOne.current && !refOne.current.contains(e.target) ) {
+          setOpen(false)
+        }
+      }
+      const handleok = (e) => {
+        // console.log(refOne.current)
+        // console.log(e.target)
+        if( refOne.current && !refOne.current.contains(e.target) ) {
+          setOpen(false)
+        }
+      }
+      // const [showProduct,setShowProduct]=useState(false);
     return(
-        <div className='flex flex-col md:flex-row gap-x-8 gap-y-6 mt-10  '>
-      <div className=' flex flex-row  justify-around'>
-          <div className='text-white ml-[5vw]'>
-            Enter Date Range:
-          </div>
-          <div className='date relative flex flex-col md:flex-row justify-center'>
-            <DateRangePicker
-            onChange={item => setState([item.selection])}
-            showSelectionPreview={true}
-            moveRangeOnFirstSelection={false}
-            months={2}
-            ranges={state}
-            direction="horizontal"
-            
-            className=' w-[40vw] flex flex-col md:flex-row '
-            
-           />
+      <>
+      <div className='flex flex-col md:flex-row gap-y-6 mt-10 gap-x-6 '>
+         
+      
+         <div className='text-white ml-[5vw]'>
+           Enter Date Range:
+         </div>
+         
+         
 
-          </div>
+       
+       
 
-        
-        
+       
+       <div className="calendarWrap flex flex-col md:flex-row">
+
+               <input
+                 value={`${format(range[0].startDate, "dd/MM/yyyy")}`}
+                 readOnly
+                 className="inputBox"
+                 onClick={ () => setOpen(open => !open) }
+               />
+               <div className="text-white text-xl my-auto pl-6">
+                 To
+               </div>
+               <input
+                 value={`${format(range[0].endDate, "dd/MM/yyyy")}`}
+                 readOnly
+                 className="inputBox"
+                 // onClick={ () => setOpen(open => !open) }
+               />
+
+               <div ref={refOne}>
+                 {open && 
+                   <DateRange
+                     onChange={item => setRange([item.selection])}
+                     editableDateInputs={true}
+                     moveRangeOnFirstSelection={false}
+                     ranges={range}
+                     months={2}
+                     direction="horizontal"
+                     className="calendarElement"
+                    //  id="calendarElement"
+                   />
+                 }
+               </div>
 
         </div>
+        <button className="h-[50px] w-[80px] bg-green-300 text-center py-2 rounded-lg " onClick={()=>{handleok}}>
+          Ok
+
+        </button>
 
       </div>
+      <ProductSelect open={open}/>
+      </>
+      
+         
+
+      
+        
     )
 }
-export default DateRange;
+export default DateRangeChoose;
