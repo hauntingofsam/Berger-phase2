@@ -4,6 +4,7 @@ import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
 import { addDays } from 'date-fns';
 import { useState } from "react";
+import "../App.css";
 const DateRange=()=>{
     const [state, setState] = useState([
         {
@@ -19,17 +20,17 @@ const DateRange=()=>{
             Enter Date Range:
           </div>
           <div className='date relative flex flex-col md:flex-row justify-center'>
-          <DateRangePicker
-          onChange={item => setState([item.selection])}
-          showSelectionPreview={true}
-          moveRangeOnFirstSelection={false}
-          months={2}
-          ranges={state}
-          direction="horizontal"
-          
-          className=' w-[40vw] flex flex-col md:flex-row '
-          
-        />
+            <DateRangePicker
+            onChange={item => setState([item.selection])}
+            showSelectionPreview={true}
+            moveRangeOnFirstSelection={false}
+            months={2}
+            ranges={state}
+            direction="horizontal"
+            
+            className=' w-[40vw] flex flex-col md:flex-row '
+            
+           />
 
           </div>
 
