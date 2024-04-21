@@ -5,6 +5,7 @@ import { DateRangePicker } from 'react-date-range';
 import { DateRange } from 'react-date-range'
 import { addDays } from 'date-fns';
 import { useState,useEffect,useRef } from "react";
+import ProductTable from "./ProductTable";
 import "../App.css";
 import format from 'date-fns/format'
 import ProductSelect from "./Productselect";
@@ -26,6 +27,7 @@ const DateRangeChoose=()=>{
     
       // open close
       const [open, setOpen] = useState(false)
+      const [tableopen,setTableOpen]=useState(false);
     
       // get the target element to toggle 
       const refOne = useRef(null)
@@ -54,9 +56,7 @@ const DateRangeChoose=()=>{
       const handleok = (e) => {
         // console.log(refOne.current)
         // console.log(e.target)
-        if( refOne.current && !refOne.current.contains(e.target) ) {
-          setOpen(false)
-        }
+        setOpen(true);
       }
       // const [showProduct,setShowProduct]=useState(false);
     return(
@@ -108,13 +108,15 @@ const DateRangeChoose=()=>{
                </div>
 
         </div>
-        <button className="h-[50px] w-[80px] bg-green-300 text-center py-2 rounded-lg " onClick={()=>{handleok}}>
+        <button className="h-[50px] w-[80px] bg-green-300 text-center py-2 rounded-lg " onClick={(e)=>{setTableOpen(true)}}>
           Ok
 
         </button>
 
+
       </div>
-      <ProductSelect open={open}/>
+      {tableopen && <ProductTable />}
+      
       </>
       
          

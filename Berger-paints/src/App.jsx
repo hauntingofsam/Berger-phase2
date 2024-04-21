@@ -12,6 +12,7 @@ import AmountField from './components/AmountField';
 
 import DateRange from './components/DateRange';
 import GeneralInfo from './components/GeneralInfo';
+import ProductTable from './components/ProductTable';
 import ProductSelect from './components/Productselect';
 import Schemes from './components/Schemes';
 
@@ -48,7 +49,8 @@ function App() {
       <AmountField/>
       <DateRange/>
       {/* <ProductSelect/> */}
-      <Schemes/>
+      {/* <Schemes/> */}
+      {/* <ProductTable/> */}
       
       
       
